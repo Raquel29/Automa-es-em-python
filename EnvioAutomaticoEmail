@@ -1,0 +1,39 @@
+import win32com.client as win32
+
+# caminho do arquivo gerado
+arquivo = arquivo_saida
+
+# cria conexão com Outlook
+outlook = win32.Dispatch('outlook.application')
+email = outlook.CreateItem(0)
+
+mes = datetime.now().strftime("%m/%Y")
+
+# configurações do e-mail
+email.To = "destinatario@email.com"     #destinatario
+email.Subject = "Dimensionamento Mensal"   #Assunto do email 
+email.Body = f"""
+Olá,
+
+Segue em anexo o dimensionamento das equipes de atendimento referente referente ao mês {mes},
+elaborado com base na análise de dados históricos, conforme metodologia padrão adotada.
+O estudo considera os principais indicadores operacionais do período, como volume de demanda, 
+nível de serviço, produtividade e capacidade das equipes, com o objetivo de garantir equilíbrio 
+entre eficiência operacional e qualidade no atendimento para o próximo mês.
+
+O arquivo contém:
+- Resultado por equipe
+- Escala 
+
+Qualquer dúvida, fico à disposição.
+
+Atenciosamente,
+"""
+
+# anexa o arquivo
+email.Attachments.Add(arquivo)
+
+# envia
+email.Send()
+
+print("Email enviado com sucesso!")
